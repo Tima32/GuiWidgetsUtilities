@@ -1,0 +1,17 @@
+Hello World. I am GUI Widget Utilities. Привет. こんにちは
+<Plugins:loadPlugins>Info: Check folder: "D:\\Программирование\\GuiWidgetsUtilities\\bin\\Plugins\\Desktop"
+<Plugins:loadPlugins>Info: Module path: D:\Программирование\GuiWidgetsUtilities\bin\Plugins\Desktop\module64.dll
+<Desctop:Plugin:Plugin>Info: Desctop Created.
+<Desctop:GetMainClass>Info: Called.
+count: 0
+0:0
+3840:2160
+
+-1280:0
+1280:1024
+
+982:2160
+2000:1200
+
+<Desctop:Plugin:enable>Info: enable.
+<Desctop:Plugin:Plugin>Info: Desctop destroyed.
