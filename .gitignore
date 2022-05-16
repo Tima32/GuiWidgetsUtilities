@@ -1,5 +1,15 @@
 ﻿##This project
 
+bin/GuiWidgetsUtilities.exe
+bin/HelperTools.lib
+bin/Kernel.dll
+bin/Kernel.lib
+bin/Plugins/*
+
+
+*.idb
+*.exp
+
 
 #C++ gitignore -------------------------------------------------------------------------------
 
