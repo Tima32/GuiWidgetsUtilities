@@ -3,6 +3,8 @@
 #include <windows.h>
 #include "../Kernel/Plugins.hpp"
 #include "../HelperTools/Screens.hpp"
+#include "../HelperTools/Console.hpp"
+#include "DataPlugin.hpp"
 
 using namespace std;
 
@@ -13,17 +15,21 @@ private:
 	GWU::Plugins::Plugin::PluginInfo pi
 	{
 		L"DataPlugin",
-		L"DataPlugin",
+		L"Base:DataPlugin",
 		L"1.0.0 lapha",
 		L"Tim",
 		L"github.com",
 		L"4timonomit4@gmail.com"
 	};
 
+	DP::DataPlugin* dp{ nullptr };
+
 public:
 	Plugin()
 	{
+		cout << GWU::console_success;
 		cout << "<DataPlugin:Plugin:Plugin>Info: DataPlugin Created." << endl;
+		cout << GWU::console_default;
 	}
 	~Plugin()
 	{
@@ -43,8 +49,33 @@ public:
 		return dependencies;
 	}
 
-	bool enableModule() final { cout << "<DataPlugin:Plugin:enable>Info: enable." << endl; return true; };
-	bool disableModule() final { cout << "<DataPlugin:Plugin:disable>Info: disable." << endl; return true; };
+	bool enableModule() final 
+	{
+		#ifdef _DEBUG
+		if (dp != nullptr)
+		{
+			cout << GWU::console_error;
+			cout << "<DataPlugin:Plugin:enable>Error: Attempt to re-create the plugin." << endl;
+			cout << GWU::console_default;
+			return true;
+		}
+		#endif // _DEBUG
+
+		dp = new DP::DataPlugin;
+		cout << GWU::console_success;
+		cout << "<DataPlugin:Plugin:enable>Info: enable." << endl;
+		cout << GWU::console_default;
+		return true;
+	};
+	bool disableModule() final 
+	{
+		delete dp;
+		dp = nullptr;
+		cout << GWU::console_success;
+		cout << "<DataPlugin:Plugin:disable>Info: disable." << endl;
+		cout << GWU::console_default;
+		return true;
+	};
 };
 
 Plugin* plugin{ nullptr };
@@ -68,7 +99,11 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 		if (plugin == nullptr)
 			plugin = new Plugin();
 		else
+		{
+			cout << GWU::console_error;
 			wcout << "<DataPlugin:DllMain>Error: The main class has been created." << endl;
+			cout << GWU::console_default;
+		}
 		break;
 	case DLL_THREAD_ATTACH:
 	case DLL_THREAD_DETACH:

@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Console.hpp" />
     <ClInclude Include="ImportExport.hpp" />
     <ClInclude Include="Screens.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Console.cpp" />
     <ClCompile Include="Screens.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

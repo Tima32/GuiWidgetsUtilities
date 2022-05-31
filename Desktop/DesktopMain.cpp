@@ -3,6 +3,7 @@
 #include <windows.h>
 #include "../Kernel/Plugins.hpp"
 #include "../HelperTools/Screens.hpp"
+#include "../HelperTools/Console.hpp"
 
 using namespace std;
 
@@ -23,7 +24,9 @@ private:
 public:
 	Plugin()
 	{
+		cout << GWU::console_success;
 		cout << "<Desctop:Plugin:Plugin>Info: Desctop Created." << endl;
+		cout << GWU::console_default;
 	}
 	~Plugin()
 	{
@@ -43,8 +46,19 @@ public:
 		return dependencies;
 	}
 
-	bool enableModule() final { cout << "<Desctop:Plugin:enable>Info: enable." << endl; return true; };
-	bool disableModule() final { cout << "<Desctop:Plugin:disable>Info: disable." << endl; return true; };
+	bool enableModule() final
+	{
+		cout << GWU::console_success;
+		cout << "<Desctop:Plugin:enable>Info: enable." << endl; return true;
+		cout << GWU::console_default;
+	};
+	bool disableModule() final
+	{
+		cout << GWU::console_success;
+		cout << "<Desctop:Plugin:disable>Info: disable." << endl;
+		cout << GWU::console_default;
+		return true;
+	};
 };
 
 Plugin* plugin{ nullptr };
@@ -68,7 +82,11 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 		if (plugin == nullptr)
 			plugin = new Plugin();
 		else
+		{
+			cout << GWU::console_error;
 			wcout << "<Desctop:DllMain>Error: The main class has been created." << endl;
+			cout << GWU::console_default;
+		}
 		break;
 	case DLL_THREAD_ATTACH:
 	case DLL_THREAD_DETACH:

@@ -3,6 +3,7 @@
 #include <windows.h>
 #include "../Kernel/Plugins.hpp"
 #include "../HelperTools/Screens.hpp"
+#include "../HelperTools/Console.hpp"
 
 using namespace std;
 
@@ -23,7 +24,9 @@ private:
 public:
 	Plugin()
 	{
+		cout << GWU::console_success;
 		cout << "<SAOHPBar:Plugin:Plugin>Info: SAOHPBar Created." << endl;
+		cout << GWU::console_default;
 	}
 	~Plugin()
 	{
@@ -43,8 +46,20 @@ public:
 		return dependencies;
 	}
 
-	bool enableModule() final { cout << "<SAOHPBar:Plugin:enable>Info: enable." << endl; return true; };
-	bool disableModule() final { cout << "<SAOHPBar:Plugin:disable>Info: disable." << endl; return true; };
+	bool enableModule() final
+	{
+		cout << GWU::console_success;
+		cout << "<SAOHPBar:Plugin:enable>Info: enable." << endl;
+		cout << GWU::console_default;
+		return true;
+	};
+	bool disableModule() final
+	{
+		cout << GWU::console_success;
+		cout << "<SAOHPBar:Plugin:disable>Info: disable." << endl;
+		cout << GWU::console_default;
+		return true;
+	};
 };
 
 Plugin* plugin{ nullptr };

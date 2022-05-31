@@ -6,6 +6,7 @@
 #include "Plugins.hpp"
 #include "Config.hpp"
 #include <Windows.h>
+#include "../HelperTools/Console.hpp"
 
 using namespace std;
 using namespace sf;
@@ -30,7 +31,9 @@ bool GWU::Plugins::Plugin::enable()
 		auto iter = std::find_if(plugins.pl.begin(), plugins.pl.end(), [&dn](Plugin* p)->bool { return dn == p->getPluginInfo().full_name; });
 		if (iter == plugins.pl.end())
 		{
+			cout << GWU::console_error;
 			wcout << "<GWU:Plugins:Plugin:enable>Error: Could not find dependency: " << dn.toWideString() << endl;
+			cout << GWU::console_default;
 			return false;
 		}
 
@@ -42,7 +45,9 @@ bool GWU::Plugins::Plugin::enable()
 			//activation
 			if (!d->enable())
 			{
+				cout << GWU::console_error;
 				wcout << "<GWU::Plugins:Plugin:enable>Error: Failed to activate dependency: " << d->getPluginInfo().full_name.toWideString() << endl;
+				cout << GWU::console_default;
 				return false;
 			}
 		}
@@ -66,8 +71,10 @@ bool GWU::Plugins::Plugin::disable()
 		for (const auto& d : dep)
 			if (d == getPluginInfo().full_name)
 			{
+				cout << GWU::console_error;
 				wcout << "<GWU:Plugins:Plugin:disable>Error: Failed to disable the plugin. one or more dependent plugins are active. (" << 
 					plugins.pl[pi]->getPluginInfo().full_name.toWideString() << ')' << endl;
+				cout << GWU::console_default;
 				return false;
 			}
 	}
@@ -140,7 +147,11 @@ void GWU::Plugins::loadPlugins()
 	for (size_t pi = 0; pi < pl.size(); pi++)
 	{
 		if (!pl[pi]->enable())
+		{
+			cout << GWU::console_success;
 			wcout << "<GWU:Plugins:loadPlugins>Error: Failed to load plugin: " << pl[pi]->getPluginInfo().full_name.toWideString() << endl;
+			cout << GWU::console_default;
+		}
 	}
 
 	return;
